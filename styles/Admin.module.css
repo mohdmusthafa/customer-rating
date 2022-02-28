@@ -1,0 +1,9 @@
+.container {
+    padding: 0 2rem;
+}
+
+.share_btns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
