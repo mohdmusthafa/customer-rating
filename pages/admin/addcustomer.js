@@ -36,7 +36,7 @@ function AddCustomer() {
       }
     }
 
-    return `http:/%2f21.21.21.160:3000/review/${id}`;
+    return `https://main.db7mpz1gccm33.amplifyapp.com/review/${id}`;
   };
 
 
