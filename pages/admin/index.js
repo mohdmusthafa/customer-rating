@@ -1,11 +1,13 @@
+import { withAuthenticator } from "@aws-amplify/ui-react";
 import PageHead from '../../components/PageHead';
 import styles from '../../styles/Home.module.css';
-function Admin() {
+function Admin({ user }) {
     return (
         <div className={styles.container}>
             <PageHead title='Admin' />
+            {user.username}
         </div>
     )
 }
 
-export default Admin;
+export default withAuthenticator(Admin);

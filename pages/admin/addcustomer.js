@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { withAuthenticator } from '@aws-amplify/ui-react';
 import { nanoid } from "nanoid";
 import styles from "../../styles/Admin.module.css";
 import { Form, Input, Button } from "semantic-ui-react";
@@ -99,4 +100,4 @@ function AddCustomer() {
   );
 }
 
-export default AddCustomer;
+export default withAuthenticator(AddCustomer);

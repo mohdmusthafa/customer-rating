@@ -1,3 +1,4 @@
+import { withAuthenticator } from '@aws-amplify/ui-react';
 import { List, Rating } from 'semantic-ui-react';
 const Reviews = () => {
     const reviews = [
@@ -33,4 +34,4 @@ const Reviews = () => {
     )
 }
 
-export default Reviews;
+export default withAuthenticator(Reviews);
