@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Rating } from 'react-simple-star-rating';
+import { Rating } from 'semantic-ui-react';
 import styles from '../../styles/Home.module.css'
 import { useRouter } from 'next/router';
 import PageHead from '../../components/PageHead';
@@ -26,8 +26,8 @@ function Review() {
             router.push('/review/thankyou')
         }
     }, [])
-    const handleRating = (rate) => {
-        setRating(rate);
+    const handleRating = (e, { rating }) => {
+        setRating(rating);
     }
     
     const handleSubmit = () => {
@@ -45,7 +45,7 @@ function Review() {
             <PageHead />
             <h1>Give Us Feedback</h1>
             <p>Your Feedback is important to us. Please rate our service</p>
-            <Rating onClick={handleRating} ratingValue={rating} /> 
+            <Rating maxRating={5} icon='star' size='massive' onRate={handleRating} /> 
             {rating ? (
                 <div>
                     <button onClick={handleSubmit} className={styles.submit_btn}>Submit</button>
