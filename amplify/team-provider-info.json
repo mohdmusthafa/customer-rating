@@ -14,6 +14,12 @@
     "categories": {
       "auth": {
         "customerrating3d288baa": {}
+      },
+      "function": {
+        "reviewHandler": {
+          "deploymentBucketName": "amplify-customerrating-dev-170715-deployment",
+          "s3Key": "amplify-builds/reviewHandler-632f785231316d504352-build.zip"
+        }
       }
     }
   }

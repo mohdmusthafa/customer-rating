@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { withAuthenticator } from '@aws-amplify/ui-react';
+import { API } from "aws-amplify";
 import { nanoid } from "nanoid";
 import styles from "../../styles/Admin.module.css";
 import { Form, Input, Button } from "semantic-ui-react";
@@ -9,10 +10,11 @@ function AddCustomer() {
   const [vehicle_no, setVehicleNo] = useState("");
   const [phone_no, setPhoneNo] = useState("");
   const [operatingSystem, setOperatingSystem] = useState("")
+  const [addedToDB, setAddedToDB] = useState(false);
   const [id, setId] = useState(nanoid(10));
 
   const router = useRouter();
-
+  const apiName = "review";
 
   useEffect(() => {
     setOperatingSystem(getOperatingSystem())
@@ -20,11 +22,20 @@ function AddCustomer() {
 
   const addCustomerToDB = async () => {
     const body = {
-      id,
       vehicle_no,
       phone_no,
     };
-    console.log(body);
+
+    if (!addedToDB) {
+      const response = await API.post(apiName, `/review/${id}`, {
+        body: body
+      })
+
+      if (response.success) {
+        setAddedToDB(true);
+      }
+    }
+
     return `http:/%2f21.21.21.160:3000/review/${id}`;
   };
 
@@ -49,6 +60,7 @@ function AddCustomer() {
   const handleSMSClick = async () => {
     const message = await createMessage();
     const smsStringPath = generateSMS(message, phone_no, operatingSystem)
+    console.log(smsStringPath)
     router.replace(smsStringPath);
   };
 

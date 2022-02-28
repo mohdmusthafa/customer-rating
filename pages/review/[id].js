@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { API } from 'aws-amplify';
 import { Rating } from 'semantic-ui-react';
 import styles from '../../styles/Home.module.css'
 import { useRouter } from 'next/router';
@@ -7,36 +8,41 @@ import ThankYou from './thankyou';
 
 function Review() {
     const [rating, setRating] = useState(0);
-    const [review, setReview] = useState({})
+    const [review, setReview] = useState({});
+    
     const router = useRouter();
     const { id } = router.query;
 
-    useEffect(() => {
-        const data = {
-            id: 'xx2',
-            vehicle_no: "KLXXLXXXX",
-            phone_no: "+917902559756",
-            rating: null,
-            timestamp: 102391030391
-        }
+    const apiName = "review"
 
-        setReview(data);
-
-        if (data.rating !== null) {
+    const preFetch = async () => {
+        const response = await API.get(apiName, `/review/${id}`);
+        setReview(response);
+        if (response.rating !== null) {
             router.push('/review/thankyou')
         }
-    }, [])
+    }
+
+    useEffect(() => {
+        if(!router.isReady) return;
+        preFetch()
+    }, [router.isReady]);
+
     const handleRating = (e, { rating }) => {
         setRating(rating);
     }
     
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         const request = {
-            id: id,
-            rating: rating
+            rating: rating,
+            timestamp: review.timestamp
         }
 
-        console.log(request)
+        const response = await API.put(apiName, `/review/${id}`, {
+            body: request
+        })
+
+        console.log(response)
         router.push('/review/thankyou')
     }
 
@@ -56,4 +62,4 @@ function Review() {
     )
 }
 
-export default Review;
+export default Review

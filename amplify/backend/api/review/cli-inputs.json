@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/review/{id}": {
+      "name": "/review/{id}",
+      "lambdaFunction": "reviewHandler",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}
