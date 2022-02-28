@@ -1,20 +1,23 @@
+import { useState, useEffect } from 'react';
+import { API } from 'aws-amplify';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import { List, Rating } from 'semantic-ui-react';
 const Reviews = () => {
-    const reviews = [
-        {
-            id: 'xx1',
-            vehicle_no: 'KLXXA0123',
-            phone_no: "7902559756",
-            rating: 3
+    const [reviews, setReviews] = useState([]);
+    const apiName = "review"
+    const fetchReviews = async () => {
+        const body = {
+
         }
-        ,{
-            id: 'xx2',
-            vehicle_no: 'KLXXA0123',
-            phone_no: "7902559756",
-            rating: 5
-        }
-    ]
+        const response = await API.post(apiName, '/reviews', {
+            body: body
+        })
+        const items = response["Items"];
+        setReviews(items)
+    }
+    useEffect(() => {
+       fetchReviews();
+    }, [])
     return (
         <div className="container">
             <h1>Reviews</h1>

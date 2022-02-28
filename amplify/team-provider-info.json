@@ -9,7 +9,8 @@
       "UnauthRoleName": "amplify-customerrating-dev-170715-unauthRole",
       "StackName": "amplify-customerrating-dev-170715",
       "StackId": "arn:aws:cloudformation:ap-south-1:473220211695:stack/amplify-customerrating-dev-170715/ca01b0e0-988a-11ec-9726-0689a0c3986a",
-      "AmplifyAppId": "db7mpz1gccm33"
+      "AmplifyAppId": "db7mpz1gccm33",
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-customerrating-dev-170715-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
     },
     "categories": {
       "auth": {
@@ -18,7 +19,7 @@
       "function": {
         "reviewHandler": {
           "deploymentBucketName": "amplify-customerrating-dev-170715-deployment",
-          "s3Key": "amplify-builds/reviewHandler-632f785231316d504352-build.zip"
+          "s3Key": "amplify-builds/reviewHandler-3952735645366f6e3337-build.zip"
         }
       }
     }

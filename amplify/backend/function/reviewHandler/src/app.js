@@ -158,9 +158,7 @@ app.get(path + '/object' + hashKeyPath + sortKeyPath, function(req, res) {
 
 app.put(path, function(req, res) {
   const id = req.params.id;
-  const body = {
-    rating: req.body.rating
-  }
+
 
   const params = {
     TableName: tableName,
@@ -168,9 +166,10 @@ app.put(path, function(req, res) {
       "id": id,
       "timestamp": req.body.timestamp
     },
-    UpdateExpression: "set rating = :r",
+    UpdateExpression: "set rating = :r, rated = :rated",
     ExpressionAttributeValues: {
-      ":r": req.body.rating
+      ":r": req.body.rating,
+      ":rated": true
     },
     ReturnValues: "UPDATED_NEW"
   }
@@ -201,6 +200,7 @@ app.post(path, function(req, res) {
     vehicle_no,
     phone_no,
     rating: null,
+    rated: false,
     timestamp: Date.now()
   }
 
@@ -258,6 +258,22 @@ app.delete(path + '/object' + hashKeyPath + sortKeyPath, function(req, res) {
     }
   });
 });
+
+app.post('/reviews', async (req, res) => {
+  const { limit, last_evaluated } = req.body;
+  const params = {
+    TableName: tableName,
+    FilterExpression: "rated = :r",
+    ExpressionAttributeValues: {
+      ":r": true
+    }
+  }
+
+  if(limit) params["Limit"] = limit;
+  if(last_evaluated) params["ExclusiveStartKey"] = last_evaluated;
+  const result = await dynamodb.scan(params).promise();
+  res.json(result);
+})
 
 app.listen(3000, function() {
   console.log("App started")
